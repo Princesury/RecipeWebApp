@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Search from './Components/search';
 import List from './Components/list';
 
@@ -6,7 +6,7 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [data, setData] = useState(null);
   const [showTable, setShowTable] = useState(false);
-  const [error, setError] = useState(null); // Add a state for error
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -17,11 +17,9 @@ const App = () => {
         if (json && json.meals) {
           setData(json);
           setShowTable(true);
-          setError(null); // Clear any previous errors
-          console.log(json);
+          setError(null);
         } else {
-          // Handle the case where data is not in the expected format
-          setError('Invalid ingredient'); // Set the error message
+          setError('Invalid ingredient'); 
           setShowTable(false);
         }
       } else {
@@ -30,7 +28,7 @@ const App = () => {
       }
     } catch (e) {
       console.error(e);
-      setError('An error occurred'); // Set the error message
+      setError('An error occurred');
       setShowTable(false);
     }
   };
@@ -40,12 +38,10 @@ const App = () => {
       <Search setSearch={setSearch} fetchData={fetchData} showTable={showTable} />
 
       {error ? (
-        // Display the error message
         <h1 className="text-2xl text-red-600 mt-4">{error}</h1>
       ) : showTable && data && data.meals ? (
         <List data={data} />
       ) : (
-        // You can display a message or component here when data is not available
         null
       )}
     </div>
